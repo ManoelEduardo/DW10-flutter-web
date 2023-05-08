@@ -1,0 +1,30 @@
+import './auth_repository.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+    final CutomDio _dio;
+
+    AuthRepositoryImpl(this._dio);
+
+    @override
+    Future<AuthModel> login(String email, String password) async {
+       try{ 
+        final result = await _dio.unauth().post(
+            '/auth',
+            data: {
+                'email': email,
+                'password': password,
+                'admin': true,
+            }
+        );
+
+        return AuthModel.fromMap(result.data);
+       } on DioError catch(e, s){
+        if(e.response?statusCode == 403){
+            log('Login ou senha inválidos', error: e, stackTrace: s);
+            throw UnauthorizedExcepion();
+        }
+        log('Erro ao realizar login', error: e, stackTrace: s);
+        throw RepositoryException(message: 'Erro ao realizar login');
+       }
+    }
+}
