@@ -14,7 +14,7 @@ class AppStyles{
         borderRadius: BorderRadius.circular(7),
     ),
     backgroundColor: ColorsApp.instance.primary,
-    // textStyle
+    textStyle: TextStyles.instance.textButtonLabel,
    );
 }
 
