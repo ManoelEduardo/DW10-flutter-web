@@ -6,6 +6,9 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    Modular.setInitialRoute('/login');
+
     return MaterialApp.router(
       title: 'Delivery Backoffice',
       theme: ThemeData(primarySwatch: Colors.blue),
