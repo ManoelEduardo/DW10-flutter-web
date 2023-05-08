@@ -1,31 +1,36 @@
-class TextStyles{
-    static AppStyles? _instance;
+import 'package:flutter/material.dart';
 
+class TextStyles {
+  static TextStyles? _instance;
 
-    TextStyles._();
+  TextStyles._();
 
-    static TextStyles get instance{
-        _instance ??= TextStyles._();
-        return _instance!;
-    }
+  static TextStyles get instance {
+    _instance ??= TextStyles._();
+    return _instance!;
+  }
 
-    String get fontFamily => 'mplus1';
+  String get fontFamily => 'mplus1';
 
-    TextStyle get textLight => TextStyle(fontWeight: FontWeight.w300, fontFamily: fontFamily);
+  TextStyle get textLight =>
+      TextStyle(fontWeight: FontWeight.w300, fontFamily: fontFamily);
 
-    TextStyle get textRegular => TextStyle(fontWeight: FontWeight.normal, fontFamily: fontFamily);
+  TextStyle get textRegular =>
+      TextStyle(fontWeight: FontWeight.normal, fontFamily: fontFamily);
 
-    TextStyle get textMedium => TextStyle(fontWeight: FontWeight.w500, fontFamily: fontFamily);
+  TextStyle get textMedium =>
+      TextStyle(fontWeight: FontWeight.w500, fontFamily: fontFamily);
 
-    TextStyle get textBold => TextStyle(fontWeight: FontWeight.w700, fontFamily: fontFamily);
+  TextStyle get textBold =>
+      TextStyle(fontWeight: FontWeight.w700, fontFamily: fontFamily);
 
-    TextStyle get textExtraBold => TextStyle(fontWeight: FontWeight.w800, fontFamily: fontFamily);
+  TextStyle get textExtraBold =>
+      TextStyle(fontWeight: FontWeight.w800, fontFamily: fontFamily);
 
-    TextStyle get textButtonLabel => textBold.copyWith(fontSize: 14);
-    TextStyle get textTitle => textExtraBold.copyWith(fontSize: 22);
-   
+  TextStyle get textButtonLabel => textBold.copyWith(fontSize: 14);
+  TextStyle get textTitle => textExtraBold.copyWith(fontSize: 22);
 }
 
 extension TextStylesExtensions on BuildContext {
-    TextStyles get textStyles => TextStyles.instance;
+  TextStyles get textStyles => TextStyles.instance;
 }
