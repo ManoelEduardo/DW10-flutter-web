@@ -63,6 +63,24 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
     });
   }
 
+  late final _$_filterEnabledAtom =
+      Atom(name: 'PaymentTypeControllerBase._filterEnabled', context: context);
+
+  bool? get filterEnabled {
+    _$_filterEnabledAtom.reportRead();
+    return super._filterEnabled;
+  }
+
+  @override
+  bool? get _filterEnabled => filterEnabled;
+
+  @override
+  set _filterEnabled(bool? value) {
+    _$_filterEnabledAtom.reportWrite(value, super._filterEnabled, () {
+      super._filterEnabled = value;
+    });
+  }
+
   late final _$_paymentTypeSelectedAtom = Atom(
       name: 'PaymentTypeControllerBase._paymentTypeSelected', context: context);
 
@@ -82,6 +100,14 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
     });
   }
 
+  late final _$loadPaymentsAsyncAction =
+      AsyncAction('PaymentTypeControllerBase.loadPayments', context: context);
+
+  @override
+  Future loadPayments() {
+    return _$loadPaymentsAsyncAction.run(() => super.loadPayments());
+  }
+
   late final _$addPaymentAsyncAction =
       AsyncAction('PaymentTypeControllerBase.addPayment', context: context);
 
@@ -96,6 +122,33 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
   @override
   Future editPayment(PaymentTypeModel payment) {
     return _$editPaymentAsyncAction.run(() => super.editPayment(payment));
+  }
+
+  late final _$savePaymentAsyncAction =
+      AsyncAction('PaymentTypeControllerBase.savePayment', context: context);
+
+  @override
+  Future savePayment(
+      {int? id,
+      required String name,
+      required String acronym,
+      required bool enabled}) {
+    return _$savePaymentAsyncAction.run(() => super
+        .savePayment(id: id, name: name, acronym: acronym, enabled: enabled));
+  }
+
+  late final _$PaymentTypeControllerBaseActionController =
+      ActionController(name: 'PaymentTypeControllerBase', context: context);
+
+  @override
+  void changeFilter(bool? enabled) {
+    final _$actionInfo = _$PaymentTypeControllerBaseActionController
+        .startAction(name: 'PaymentTypeControllerBase.changeFilter');
+    try {
+      return super.changeFilter(enabled);
+    } finally {
+      _$PaymentTypeControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

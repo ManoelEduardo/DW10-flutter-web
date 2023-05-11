@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../core/ui/helpers/loader.dart';
 import '../../core/ui/helpers/messages.dart';
 import 'payment_type_controller.dart';
+import 'widgets/payment_type_form/payment_type_form_modal.dart';
 import 'widgets/payment_type_header.dart';
 import 'widgets/payment_type_item.dart';
 
@@ -26,6 +27,11 @@ class _PaymentTypePageState extends State<PaymentTypePage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final filterDisposer =
+          reaction((_) => paymentTypeController.filterEnabled, (_) {
+        paymentTypeController.loadPayments();
+      });
+
       final statusDisposer =
           reaction((_) => paymentTypeController.status, (status) {
         switch (status) {
@@ -48,11 +54,24 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             hideLoader();
             showAddOrUpdatePayment();
             break;
+          case PaymentTypeStateStatus.saved:
+            hideLoader();
+            Navigator.of(context, rootNavigator: true).pop();
+            paymentTypeController.loadPayments();
+            break;
         }
       });
-      disposers.addAll([statusDisposer]);
+      disposers.addAll([statusDisposer, filterDisposer]);
       paymentTypeController.loadPayments();
     });
+  }
+
+  @override
+  void dispose() {
+    for (final dispose in disposers) {
+      dispose();
+    }
+    super.dispose();
   }
 
   void showAddOrUpdatePayment() {
@@ -67,7 +86,10 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             ),
             backgroundColor: Colors.white,
             elevation: 10,
-            child: const Text('MODAL X'),
+            child: PaymentTypeFormModal(
+              model: paymentTypeController.paymentTypeSelected,
+              controller: paymentTypeController,
+            ),
           ),
         );
       },
@@ -86,25 +108,27 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             height: 50,
           ),
           Expanded(
-            child: Observer(builder: (_) {
-              return GridView.builder(
-                itemCount: paymentTypeController.paymentTypes.length,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  mainAxisExtent: 120,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 10,
-                  maxCrossAxisExtent: 680,
-                ),
-                itemBuilder: (context, index) {
-                  final paymentTypeModel =
-                      paymentTypeController.paymentTypes[index];
-                  return PaymentTypeItem(
-                    payment: paymentTypeModel,
-                    controller: paymentTypeController,
-                  );
-                },
-              );
-            }),
+            child: Observer(
+              builder: (_) {
+                return GridView.builder(
+                  itemCount: paymentTypeController.paymentTypes.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    mainAxisExtent: 120,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 10,
+                    maxCrossAxisExtent: 680,
+                  ),
+                  itemBuilder: (context, index) {
+                    final paymentTypeModel =
+                        paymentTypeController.paymentTypes[index];
+                    return PaymentTypeItem(
+                      payment: paymentTypeModel,
+                      controller: paymentTypeController,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
