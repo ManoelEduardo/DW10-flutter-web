@@ -77,7 +77,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<void> uploadImageProduct(Uint8List file, String filename) async {
+  Future<String> uploadImageProduct(Uint8List file, String filename) async {
     try {
       final formData = FormData.fromMap(
         {

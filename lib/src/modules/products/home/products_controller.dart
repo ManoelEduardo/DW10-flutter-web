@@ -18,8 +18,6 @@ class ProductsController = ProductsControllerBase with _$ProductsController;
 abstract class ProductsControllerBase with Store {
   final ProductRepository _productRepository;
 
-  ProductsControllerBase(this._productRepository);
-
   @readonly
   var _status = ProductStateStatus.initial;
 
@@ -28,6 +26,14 @@ abstract class ProductsControllerBase with Store {
 
   @readonly
   String? _filterName;
+
+  ProductsControllerBase(this._productRepository);
+
+  @action
+  Future<void> filterByName(String name) async {
+    _filterName = name;
+    await loadProducts();
+  }
 
   @action
   Future<void> loadProducts() async {

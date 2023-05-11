@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../core/ui/helpers/debouncer.dart';
 import '../../../core/ui/helpers/loader.dart';
 import '../../../core/ui/helpers/messages.dart';
 import '../../../core/ui/widgets/base_header.dart';
@@ -18,6 +20,7 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> with Loader, Messages {
   final producstController = Modular.get<ProductsController>();
   late final ReactionDisposer statusDisposer;
+  final debouncer = Debouncer(milliseconds: 500);
 
   @override
   void initState() {
@@ -59,22 +62,36 @@ class _ProductsPageState extends State<ProductsPage> with Loader, Messages {
           BaseHeader(
             title: 'ADMINISTRAR PRODUTOS',
             buttonLabel: 'ADICIONAR PRODUTO',
-            buttonPressed: () {},
+            buttonPressed: () async {
+              await Modular.to.pushNamed('/products/detail');
+              producstController.loadProducts();
+            },
+            searchChange: (value) {
+              debouncer.call(() {
+                producstController.filterByName(value);
+              });
+            },
           ),
           const SizedBox(
             height: 50,
           ),
           Expanded(
-            child: GridView.builder(
-              itemCount: 10,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                mainAxisExtent: 280,
-                mainAxisSpacing: 20,
-                maxCrossAxisExtent: 280,
-                crossAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index) {
-                return const ProductItem();
+            child: Observer(
+              builder: (_) {
+                return GridView.builder(
+                  itemCount: producstController.products.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    mainAxisExtent: 280,
+                    mainAxisSpacing: 20,
+                    maxCrossAxisExtent: 280,
+                    crossAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ProductItem(
+                      product: producstController.products[index],
+                    );
+                  },
+                );
               },
             ),
           ),
