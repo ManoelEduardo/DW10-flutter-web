@@ -63,6 +63,24 @@ mixin _$ProductsController on ProductsControllerBase, Store {
     });
   }
 
+  late final _$_productSelectedAtom =
+      Atom(name: 'ProductsControllerBase._productSelected', context: context);
+
+  ProductModel? get productSelected {
+    _$_productSelectedAtom.reportRead();
+    return super._productSelected;
+  }
+
+  @override
+  ProductModel? get _productSelected => productSelected;
+
+  @override
+  set _productSelected(ProductModel? value) {
+    _$_productSelectedAtom.reportWrite(value, super._productSelected, () {
+      super._productSelected = value;
+    });
+  }
+
   late final _$filterByNameAsyncAction =
       AsyncAction('ProductsControllerBase.filterByName', context: context);
 
@@ -77,6 +95,23 @@ mixin _$ProductsController on ProductsControllerBase, Store {
   @override
   Future<void> loadProducts() {
     return _$loadProductsAsyncAction.run(() => super.loadProducts());
+  }
+
+  late final _$addProductsAsyncAction =
+      AsyncAction('ProductsControllerBase.addProducts', context: context);
+
+  @override
+  Future<void> addProducts() {
+    return _$addProductsAsyncAction.run(() => super.addProducts());
+  }
+
+  late final _$editProductsAsyncAction =
+      AsyncAction('ProductsControllerBase.editProducts', context: context);
+
+  @override
+  Future<void> editProducts(ProductModel productModel) {
+    return _$editProductsAsyncAction
+        .run(() => super.editProducts(productModel));
   }
 
   @override
