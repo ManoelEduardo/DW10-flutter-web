@@ -30,7 +30,9 @@ class _MenuBarState extends State<MenuBar> {
             alignment: colapsed ? Alignment.center : Alignment.centerRight,
             child: IconButton(
               onPressed: () {
-                colapsed = !colapsed;
+                setState(() {
+                  colapsed = !colapsed;
+                });
               },
               icon: Icon(
                 colapsed

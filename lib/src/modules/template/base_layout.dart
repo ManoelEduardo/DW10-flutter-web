@@ -25,7 +25,7 @@ class BaseLayout extends StatelessWidget {
               ),
               alignment: Alignment.centerLeft,
               child: Container(
-                width: shortestSide * 13,
+                width: shortestSide * .13,
                 margin: const EdgeInsets.only(left: 60),
                 child: Image.asset(
                   'assets/images/logo.png',
@@ -33,10 +33,10 @@ class BaseLayout extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-              top: shortestSide * .15,
+              top: shortestSide * .13,
               child: Container(
-                color: Colors.white,
                 decoration: const BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.horizontal(
                     left: Radius.circular(20),
                     right: Radius.circular(20),

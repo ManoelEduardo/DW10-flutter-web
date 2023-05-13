@@ -32,7 +32,7 @@ class MenuButton extends StatelessWidget {
             child: Tooltip(
               message: menu.label,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () => onPressed(menu),
                 icon: Image.asset(
                   'assets/images/icons/${isSelected ? menu.assetIconSelected : menu.assetIcon}',
                 ),

@@ -42,7 +42,7 @@ abstract class PaymentTypeControllerBase with Store {
   void changeFilter(bool? enabled) => _filterEnabled = enabled;
 
   @action
-  void loadPayments() async {
+  Future<void> loadPayments() async {
     try {
       _status = PaymentTypeStateStatus.loading;
       _paymentTypes = await _paymentTyperepository.findAll(null);
@@ -55,7 +55,7 @@ abstract class PaymentTypeControllerBase with Store {
   }
 
   @action
-  void addPayment() async {
+  Future<void> addPayment() async {
     _status = PaymentTypeStateStatus.loading;
     await Future.delayed(Duration.zero);
     _paymentTypeSelected = null;
@@ -63,7 +63,7 @@ abstract class PaymentTypeControllerBase with Store {
   }
 
   @action
-  void editPayment(PaymentTypeModel payment) async {
+  Future<void> editPayment(PaymentTypeModel payment) async {
     _status = PaymentTypeStateStatus.loading;
     await Future.delayed(Duration.zero);
     _paymentTypeSelected = payment;
@@ -71,7 +71,7 @@ abstract class PaymentTypeControllerBase with Store {
   }
 
   @action
-  void savePayment({
+  Future<void> savePayment({
     int? id,
     required String name,
     required String acronym,

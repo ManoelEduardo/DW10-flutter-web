@@ -104,7 +104,7 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
       AsyncAction('PaymentTypeControllerBase.loadPayments', context: context);
 
   @override
-  Future loadPayments() {
+  Future<void> loadPayments() {
     return _$loadPaymentsAsyncAction.run(() => super.loadPayments());
   }
 
@@ -112,7 +112,7 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
       AsyncAction('PaymentTypeControllerBase.addPayment', context: context);
 
   @override
-  Future addPayment() {
+  Future<void> addPayment() {
     return _$addPaymentAsyncAction.run(() => super.addPayment());
   }
 
@@ -120,7 +120,7 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
       AsyncAction('PaymentTypeControllerBase.editPayment', context: context);
 
   @override
-  Future editPayment(PaymentTypeModel payment) {
+  Future<void> editPayment(PaymentTypeModel payment) {
     return _$editPaymentAsyncAction.run(() => super.editPayment(payment));
   }
 
@@ -128,7 +128,7 @@ mixin _$PaymentTypeController on PaymentTypeControllerBase, Store {
       AsyncAction('PaymentTypeControllerBase.savePayment', context: context);
 
   @override
-  Future savePayment(
+  Future<void> savePayment(
       {int? id,
       required String name,
       required String acronym,
