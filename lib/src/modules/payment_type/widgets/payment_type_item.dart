@@ -16,7 +16,7 @@ class PaymentTypeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorAll = !payment.enabled ? Colors.black : Colors.grey;
+    final colorAll = payment.enabled ? Colors.black : Colors.grey;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),

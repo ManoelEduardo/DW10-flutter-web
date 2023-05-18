@@ -15,7 +15,7 @@ class BaseHeader extends StatelessWidget {
     this.searchChange,
     this.buttonLabel = '',
     this.buttonPressed,
-    this.addButton = false,
+    this.addButton = true,
     this.filterWidget,
   });
 
@@ -68,7 +68,7 @@ class BaseHeader extends StatelessWidget {
                 width: constrains.maxWidth * .15,
                 height: 48,
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: buttonPressed,
                   icon: Icon(
                     Icons.add,
                     size: constrains.maxWidth * .02,

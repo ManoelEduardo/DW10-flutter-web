@@ -45,7 +45,7 @@ abstract class PaymentTypeControllerBase with Store {
   Future<void> loadPayments() async {
     try {
       _status = PaymentTypeStateStatus.loading;
-      _paymentTypes = await _paymentTyperepository.findAll(null);
+      _paymentTypes = await _paymentTyperepository.findAll(_filterEnabled);
       _status = PaymentTypeStateStatus.loaded;
     } catch (e, s) {
       log('Erro ao carregar as formas de pagemnto', error: e, stackTrace: s);
