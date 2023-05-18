@@ -16,7 +16,7 @@ class PaymentTypeModel {
       'id': id,
       'name': name,
       'acronym': acronym,
-      'enable': enabled,
+      'enabled': enabled,
     };
   }
 
